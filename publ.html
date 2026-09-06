@@ -10,10 +10,10 @@
   <title>Publicações</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/jpeg" href="assets/pfp.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/pfp.jpg" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
             <span class="btn-exit-icon">←</span>
             <span>Voltar</span>
           </button>
-          <a href="index.html" class="btn-exit" id="btn-home-back" aria-label="Voltar para a página inicial">
+          <a href="/index.html" class="btn-exit" id="btn-home-back" aria-label="Voltar para a página inicial">
             <span class="btn-exit-icon">←</span>
             <span>Início</span>
           </a>
@@ -52,9 +52,6 @@
       <!-- View: Single Post Reader -->
       <article id="view-post" class="publ-view" style="display: none;">
         <div class="publ-article-header" id="post-header">
-          <div class="publ-post-meta" id="post-meta-top">
-            <span id="post-read-time" class="publ-read-time"></span>
-          </div>
           <h1 class="publ-post-title" id="post-title"></h1>
         </div>
 
@@ -63,10 +60,6 @@
         </div>
 
         <footer class="publ-article-footer">
-          <button type="button" class="btn-exit" id="btn-footer-back">
-            <span class="btn-exit-icon">←</span>
-            <span>Voltar</span>
-          </button>
           <a href="#" class="privacy-link" id="btn-back-to-top">↑ topo</a>
         </footer>
       </article>
@@ -87,7 +80,7 @@
 
     <!-- Corner Links -->
     <div class="corner-privacy">
-      <a href="privacidade.html" class="privacy-link" id="link-privacy">
+      <a href="/privacidade.html" class="privacy-link" id="link-privacy">
         privacidade
       </a>
     </div>
@@ -109,21 +102,12 @@
       const postsContainer = document.getElementById('posts-container');
       const btnPublBack = document.getElementById('btn-publ-back');
       const btnHomeBack = document.getElementById('btn-home-back');
-      const btnFooterBack = document.getElementById('btn-footer-back');
       const btnErrorBack = document.getElementById('btn-error-back');
       const btnBackToTop = document.getElementById('btn-back-to-top');
 
       const postTitle = document.getElementById('post-title');
-      const postReadTime = document.getElementById('post-read-time');
       const postContent = document.getElementById('post-content');
       const errorMessage = document.getElementById('error-message');
-
-      // Calculate Read Time
-      function calculateReadTime(text) {
-        const words = text.trim().split(/\s+/).filter(Boolean).length;
-        const minutes = Math.max(1, Math.ceil(words / 200));
-        return `${minutes} min de leitura`;
-      }
 
       // Extract Metadata (Title & First Lines of Text as Description)
       function extractMetadata(markdown, filename) {
@@ -344,13 +328,13 @@
         if (post && post.rawContent) {
           rawMarkdown = post.rawContent;
         } else {
-          // Fetch from publicacoes directory
+          // Fetch from publicacoes directory using absolute path
           const candidatePaths = [
+            `/publicacoes/${slug}.md`,
+            `/publicacoes/${slug}.mdx`,
+            `/publicacoes/${slug}`,
             `publicacoes/${slug}.md`,
-            `publicacoes/${slug}.mdx`,
-            `publicacoes/${slug}`,
-            `./publicacoes/${slug}.md`,
-            `./publicacoes/${slug}.mdx`
+            `publicacoes/${slug}.mdx`
           ];
 
           let loaded = false;
@@ -375,11 +359,8 @@
           post = extractMetadata(rawMarkdown, `${slug}.md`);
         }
 
-        const readTime = calculateReadTime(post.content || rawMarkdown);
-
         document.title = `${post.title} — Publicações`;
         postTitle.textContent = post.title;
-        postReadTime.textContent = readTime;
         postContent.innerHTML = renderMarkdown(post.content || rawMarkdown);
 
         btnPublBack.style.display = 'inline-flex';
@@ -396,7 +377,7 @@
         viewError.style.display = viewName === 'error' ? 'block' : 'none';
 
         if (viewName === 'list') {
-          document.title = 'Publicações — Roberto Mota';
+          document.title = 'Publicações';
           btnPublBack.style.display = 'none';
           btnHomeBack.style.display = 'inline-flex';
           currentPostSlug = null;
@@ -410,28 +391,38 @@
         btnHomeBack.style.display = 'none';
       }
 
-      // Router / Navigation Handler
+      // Router / Navigation Handler (URL format: ./publ/slug or /publ/slug)
       window.publNavigate = function (slug) {
         if (slug) {
-          const url = new URL(window.location);
-          url.searchParams.set('post', slug);
-          window.history.pushState({ post: slug }, '', url);
+          const targetUrl = `/publ/${slug}`;
+          window.history.pushState({ post: slug }, '', targetUrl);
           loadPost(slug);
         } else {
-          const url = new URL(window.location);
-          url.searchParams.delete('post');
-          window.history.pushState({}, '', url);
+          window.history.pushState({}, '', '/publ');
           showView('list');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       };
 
-      // Route handling
+      // Route handling from URL pathname
       function handleRoute() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const postParam = urlParams.get('post') || urlParams.get('p');
-        const hash = window.location.hash ? window.location.hash.replace(/^#/, '') : null;
-        const targetPost = postParam || hash;
+        const pathname = window.location.pathname.replace(/\/+$/, '');
+        let targetPost = null;
+
+        // Check if path is /publ/slug or publ/slug
+        const match = pathname.match(/(?:^|\/)publ\/([^/]+)$/i);
+        if (match && match[1] && match[1] !== 'index' && match[1] !== 'index.html' && match[1] !== 'publ.html') {
+          targetPost = match[1];
+        }
+
+        // Fallbacks for query param and hash
+        if (!targetPost) {
+          const urlParams = new URLSearchParams(window.location.search);
+          targetPost = urlParams.get('post') || urlParams.get('p');
+        }
+        if (!targetPost && window.location.hash) {
+          targetPost = window.location.hash.replace(/^#/, '');
+        }
 
         if (targetPost) {
           loadPost(targetPost);
@@ -450,7 +441,6 @@
       });
 
       btnPublBack.addEventListener('click', () => window.publNavigate(null));
-      btnFooterBack.addEventListener('click', () => window.publNavigate(null));
       btnErrorBack.addEventListener('click', () => window.publNavigate(null));
 
       btnBackToTop.addEventListener('click', (e) => {
@@ -464,7 +454,7 @@
 
         // 1. Try Directory listing fetch (standard web servers / Cloudflare / local)
         try {
-          const res = await fetch('publicacoes/');
+          const res = await fetch('/publicacoes/');
           if (res.ok) {
             const html = await res.text();
             const linkRegex = /href=["']([^"']+\.(?:md|mdx))["']/gi;
@@ -506,7 +496,7 @@
         const loadedPosts = [];
         for (const file of Array.from(discoveredFiles)) {
           try {
-            const res = await fetch(`publicacoes/${file}`);
+            const res = await fetch(`/publicacoes/${file}`);
             if (res.ok) {
               const md = await res.text();
               const meta = extractMetadata(md, file);
