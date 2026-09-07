@@ -13,7 +13,7 @@
   <link rel="icon" type="image/jpeg" href="/assets/pfp.jpg" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css?v=1.0.4" />
 </head>
 
 <body>
@@ -60,6 +60,7 @@
         </div>
 
         <footer class="publ-article-footer">
+          <button type="button" class="privacy-link" id="btn-footer-back">← publicações</button>
           <a href="#" class="privacy-link" id="btn-back-to-top">↑ topo</a>
         </footer>
       </article>
@@ -83,7 +84,7 @@
       <a href="/privacidade.html" class="privacy-link" id="link-privacy">
         privacidade
       </a>
-      <a href="https://status.rbto20.com" target="_blank" rel="noopener noreferrer" class="privacy-link" id="link-status">
+      <a href="https://status.rbto20.com" class="privacy-link" id="link-status">
         status
       </a>
     </div>
@@ -106,6 +107,7 @@
       const btnPublBack = document.getElementById('btn-publ-back');
       const btnHomeBack = document.getElementById('btn-home-back');
       const btnErrorBack = document.getElementById('btn-error-back');
+      const btnFooterBack = document.getElementById('btn-footer-back');
       const btnBackToTop = document.getElementById('btn-back-to-top');
 
       const postTitle = document.getElementById('post-title');
@@ -447,6 +449,9 @@
 
       btnPublBack.addEventListener('click', () => window.pubNavigate(null));
       btnErrorBack.addEventListener('click', () => window.pubNavigate(null));
+      if (btnFooterBack) {
+        btnFooterBack.addEventListener('click', () => window.pubNavigate(null));
+      }
 
       btnBackToTop.addEventListener('click', (e) => {
         e.preventDefault();

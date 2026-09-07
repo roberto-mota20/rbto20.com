@@ -315,38 +315,45 @@ body {
 }
 
 /* ==========================================================================
-   PUBLICAÇÕES MODULE STYLES (Markdown & MDX)
+   PUBLICAÇÕES MODULE STYLES (Markdown & MDX - Responsive & Mobile-Optimized)
    ========================================================================== */
 .site-wrapper.pub-wrapper,
 .site-wrapper.publ-wrapper,
 .site-wrapper:has(.pub-frame),
 .site-wrapper:has(.publ-frame) {
   justify-content: flex-start;
-  padding: 3rem clamp(1.25rem, 5vw, 2.5rem);
+  padding: 2.5rem clamp(1rem, 4vw, 2.5rem) max(4.5rem, calc(3rem + env(safe-area-inset-bottom, 1.5rem)));
+  width: 100%;
 }
 
 .pub-frame,
 .publ-frame {
-  max-width: 640px;
+  max-width: 680px;
   width: 100%;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .publ-header {
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.25rem;
 }
 
 .publ-nav-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-shrink: 0;
 }
 
 .publ-view {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
   width: 100%;
 }
 
@@ -354,7 +361,7 @@ body {
 .publ-posts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.75rem;
   width: 100%;
 }
 
@@ -362,13 +369,14 @@ body {
   background: rgba(255, 255, 255, 0.012);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.15rem;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.5rem;
   text-decoration: none;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .publ-card:hover,
@@ -379,28 +387,35 @@ body {
   transform: translateY(-1px);
 }
 
+.publ-card:active {
+  transform: scale(0.99);
+  background: var(--ds-teal-subtle);
+  border-color: var(--ds-teal-500);
+}
+
 .publ-card-title {
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
   line-height: 1.35;
   transition: color 0.15s ease;
 }
 
-.publ-card:hover .publ-card-title {
+.publ-card:hover .publ-card-title,
+.publ-card:focus-visible .publ-card-title {
   color: #ffffff;
 }
 
 .publ-card-desc {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .publ-card-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
 }
 
 .publ-read-more {
@@ -444,13 +459,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.15rem;
 }
 
 .publ-post-title {
-  font-size: 1.3rem;
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
   font-weight: 600;
   color: var(--ds-teal-500);
   line-height: 1.3;
@@ -459,12 +474,13 @@ body {
 
 /* Markdown Render Body */
 .markdown-body {
-  font-size: 0.82rem;
-  line-height: 1.75;
+  font-size: 0.9rem;
+  line-height: 1.72;
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.05rem;
+  overflow-wrap: break-word;
   word-break: break-word;
 }
 
@@ -477,29 +493,29 @@ body {
   color: var(--text-primary);
   font-weight: 600;
   line-height: 1.35;
-  margin-top: 0.75rem;
+  margin-top: 0.65rem;
 }
 
 .markdown-body h1 {
-  font-size: 1.2rem;
+  font-size: 1.22rem;
 }
 
 .markdown-body h2 {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   padding-bottom: 0.35rem;
 }
 
 .markdown-body h3 {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
 }
 
 .markdown-body h4 {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .markdown-body p {
-  color: var(--text-secondary);
+  color: #c9d1d9;
 }
 
 .markdown-body strong {
@@ -520,10 +536,10 @@ body {
 .markdown-body blockquote {
   border-left: 3px solid var(--ds-teal-500);
   background: var(--ds-teal-subtle);
-  padding: 0.65rem 0.95rem;
+  padding: 0.65rem 0.9rem;
   border-radius: 0 4px 4px 0;
   color: var(--text-secondary);
-  margin: 0.35rem 0;
+  margin: 0.25rem 0;
   font-style: italic;
 }
 
@@ -537,7 +553,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  color: var(--text-secondary);
+  color: #c9d1d9;
 }
 
 .markdown-body ul.task-list {
@@ -559,7 +575,7 @@ body {
 .markdown-body hr {
   border: none;
   border-top: 1px solid var(--border-color);
-  margin: 1.25rem 0;
+  margin: 1rem 0;
 }
 
 .markdown-body code {
@@ -570,6 +586,7 @@ body {
   padding: 0.12rem 0.35rem;
   border-radius: 3px;
   color: var(--ds-teal-500);
+  word-break: break-word;
 }
 
 /* Code Blocks */
@@ -579,6 +596,7 @@ body {
   border-radius: 6px;
   overflow: hidden;
   background: #080a0f;
+  max-width: 100%;
 }
 
 .code-block-header {
@@ -604,15 +622,21 @@ body {
   color: var(--text-secondary);
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  padding: 0.15rem 0.45rem;
+  padding: 0.2rem 0.5rem;
+  min-height: 26px;
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-copy-code:hover {
   border-color: var(--ds-teal-500);
   color: var(--ds-teal-500);
   background: var(--ds-teal-subtle);
+}
+
+.btn-copy-code:active {
+  transform: scale(0.96);
 }
 
 .btn-copy-code.copied {
@@ -623,8 +647,9 @@ body {
 
 .markdown-body pre {
   margin: 0;
-  padding: 0.85rem 1rem;
+  padding: 0.8rem 0.95rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   background: #080a0f;
 }
 
@@ -633,17 +658,22 @@ body {
   border: none;
   padding: 0;
   color: #d1d7e0;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.6;
   display: block;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
 /* Tables */
 .table-wrapper {
   overflow-x: auto;
-  margin: 0.85rem 0;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.75rem 0;
   border: 1px solid var(--border-color);
   border-radius: 6px;
+  max-width: 100%;
 }
 
 .markdown-body table {
@@ -675,15 +705,114 @@ body {
   border-radius: 6px;
   border: 1px solid var(--border-color);
   margin: 0.65rem 0;
+  display: block;
 }
 
 .publ-article-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 1.75rem;
-  padding-top: 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 1.15rem;
   border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE BREAKPOINTS (Optimized for Small Screens)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .site-wrapper.pub-wrapper,
+  .site-wrapper.publ-wrapper,
+  .site-wrapper:has(.pub-frame),
+  .site-wrapper:has(.publ-frame) {
+    padding: 1.15rem 0.9rem max(4.5rem, calc(3.5rem + env(safe-area-inset-bottom, 1rem))) 0.9rem;
+  }
+
+  .pub-frame,
+  .publ-frame {
+    max-width: 100%;
+    gap: 1rem;
+  }
+
+  .publ-header {
+    padding-bottom: 0.6rem;
+  }
+
+  .publ-card {
+    padding: 0.85rem 0.95rem;
+    gap: 0.4rem;
+    border-radius: 6px;
+  }
+
+  .publ-card-title {
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+
+  .publ-card-desc {
+    font-size: 0.78rem;
+    line-height: 1.48;
+  }
+
+  .publ-article-header {
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .publ-post-title {
+    font-size: 1.2rem;
+    line-height: 1.28;
+  }
+
+  .markdown-body {
+    font-size: 0.86rem;
+    line-height: 1.68;
+    gap: 0.9rem;
+  }
+
+  .markdown-body h1 {
+    font-size: 1.15rem;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.02rem;
+  }
+
+  .markdown-body h3 {
+    font-size: 0.92rem;
+  }
+
+  .markdown-body pre {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .code-block-header {
+    padding: 0.3rem 0.65rem;
+  }
+
+  .markdown-body table {
+    font-size: 0.74rem;
+  }
+
+  .markdown-body th,
+  .markdown-body td {
+    padding: 0.45rem 0.55rem;
+  }
+
+  .markdown-body blockquote {
+    padding: 0.55rem 0.75rem;
+  }
+
+  .corner-privacy {
+    bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+    right: max(1rem, env(safe-area-inset-right, 1rem));
+    gap: 0.9rem;
+  }
+
+  .privacy-link {
+    font-size: 0.72rem;
+  }
 }
 
 
