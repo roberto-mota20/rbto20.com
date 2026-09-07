@@ -283,6 +283,8 @@ body {
   z-index: 100;
   margin: 0;
   display: flex;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 @media (max-width: 600px) {
@@ -315,12 +317,15 @@ body {
 /* ==========================================================================
    PUBLICAÇÕES MODULE STYLES (Markdown & MDX)
    ========================================================================== */
+.site-wrapper.pub-wrapper,
 .site-wrapper.publ-wrapper,
+.site-wrapper:has(.pub-frame),
 .site-wrapper:has(.publ-frame) {
   justify-content: flex-start;
   padding: 3rem clamp(1.25rem, 5vw, 2.5rem);
 }
 
+.pub-frame,
 .publ-frame {
   max-width: 640px;
   width: 100%;

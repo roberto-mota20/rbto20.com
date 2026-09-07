@@ -83,6 +83,9 @@
       <a href="/privacidade.html" class="privacy-link" id="link-privacy">
         privacidade
       </a>
+      <a href="https://status.rbto20.com" target="_blank" rel="noopener noreferrer" class="privacy-link" id="link-status">
+        status
+      </a>
     </div>
   </div>
 
@@ -296,7 +299,7 @@
 
         postsContainer.innerHTML = postsToRender.map(post => {
           return `
-            <article class="publ-card" onclick="window.publNavigate('${post.slug}')" role="button" tabindex="0" aria-label="Ler ${post.title}">
+            <article class="publ-card" onclick="window.pubNavigate('${post.slug}')" role="button" tabindex="0" aria-label="Ler ${post.title}">
               <h2 class="publ-card-title">${post.title}</h2>
               ${post.description ? `<p class="publ-card-desc">${post.description}</p>` : ''}
               <div class="publ-card-footer">
@@ -391,27 +394,29 @@
         btnHomeBack.style.display = 'none';
       }
 
-      // Router / Navigation Handler (URL format: ./publ/slug or /publ/slug)
-      window.publNavigate = function (slug) {
+      // Router / Navigation Handler (URL format: /pub/slug or /pub?post=slug)
+      window.pubNavigate = function (slug) {
         if (slug) {
-          const targetUrl = `/publ/${slug}`;
+          const targetUrl = `/pub/${slug}`;
           window.history.pushState({ post: slug }, '', targetUrl);
           loadPost(slug);
         } else {
-          window.history.pushState({}, '', '/publ');
+          window.history.pushState({}, '', '/pub');
           showView('list');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       };
+      // Backwards compatibility alias
+      window.publNavigate = window.pubNavigate;
 
       // Route handling from URL pathname
       function handleRoute() {
         const pathname = window.location.pathname.replace(/\/+$/, '');
         let targetPost = null;
 
-        // Check if path is /publ/slug or publ/slug
-        const match = pathname.match(/(?:^|\/)publ\/([^/]+)$/i);
-        if (match && match[1] && match[1] !== 'index' && match[1] !== 'index.html' && match[1] !== 'publ.html') {
+        // Check if path is /pub/slug or /publ/slug
+        const match = pathname.match(/(?:^|\/)pub(?:l)?\/([^/]+)$/i);
+        if (match && match[1] && match[1] !== 'index' && match[1] !== 'index.html' && match[1] !== 'pub.html' && match[1] !== 'publ.html') {
           targetPost = match[1];
         }
 
@@ -440,8 +445,8 @@
         }
       });
 
-      btnPublBack.addEventListener('click', () => window.publNavigate(null));
-      btnErrorBack.addEventListener('click', () => window.publNavigate(null));
+      btnPublBack.addEventListener('click', () => window.pubNavigate(null));
+      btnErrorBack.addEventListener('click', () => window.pubNavigate(null));
 
       btnBackToTop.addEventListener('click', (e) => {
         e.preventDefault();
