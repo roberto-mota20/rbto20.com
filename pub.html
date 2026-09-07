@@ -60,7 +60,6 @@
         </div>
 
         <footer class="publ-article-footer">
-          <button type="button" class="privacy-link" id="btn-footer-back">← publicações</button>
           <a href="#" class="privacy-link" id="btn-back-to-top">↑ topo</a>
         </footer>
       </article>
@@ -107,7 +106,6 @@
       const btnPublBack = document.getElementById('btn-publ-back');
       const btnHomeBack = document.getElementById('btn-home-back');
       const btnErrorBack = document.getElementById('btn-error-back');
-      const btnFooterBack = document.getElementById('btn-footer-back');
       const btnBackToTop = document.getElementById('btn-back-to-top');
 
       const postTitle = document.getElementById('post-title');
@@ -449,9 +447,6 @@
 
       btnPublBack.addEventListener('click', () => window.pubNavigate(null));
       btnErrorBack.addEventListener('click', () => window.pubNavigate(null));
-      if (btnFooterBack) {
-        btnFooterBack.addEventListener('click', () => window.pubNavigate(null));
-      }
 
       btnBackToTop.addEventListener('click', (e) => {
         e.preventDefault();

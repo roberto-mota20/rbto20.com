@@ -710,7 +710,7 @@ body {
 
 .publ-article-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 1.5rem;
   padding-top: 1.15rem;
