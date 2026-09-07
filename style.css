@@ -458,14 +458,11 @@ body {
 .publ-article-header {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1.15rem;
+  margin-bottom: 0.65rem;
 }
 
 .publ-post-title {
-  font-size: clamp(1.2rem, 4vw, 1.45rem);
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
   font-weight: 600;
   color: var(--ds-teal-500);
   line-height: 1.3;
@@ -755,8 +752,7 @@ body {
   }
 
   .publ-article-header {
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.75rem;
+    margin-bottom: 0.55rem;
   }
 
   .publ-post-title {
